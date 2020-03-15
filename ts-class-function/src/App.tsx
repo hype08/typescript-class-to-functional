@@ -4,6 +4,15 @@ import './App.css';
 import Confirm from './Confirm';
 
 class App extends React.Component {
+
+  private handleCancelConfirmClick = () => {
+    console.log("Cancel clicked");
+  }
+
+  private handleOkConfirmClick = () => {
+    console.log("Ok clicked");
+  }
+
   public render() {
     return (
       <div className="App">
@@ -21,7 +30,7 @@ class App extends React.Component {
             Learn React
           </a>
         </header>
-        <Confirm title="React and TypeScript App" content="Content" cancelCaption="No Way" okCaption="Right on"/>
+        <Confirm title="title" content="content" onCancelClick={this.handleCancelConfirmClick} onOkClick={this.handleOkConfirmClick}/>
       </div>
     )
   }
