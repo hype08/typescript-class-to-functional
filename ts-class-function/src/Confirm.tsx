@@ -4,13 +4,16 @@ import './Confirm.css'
 interface IProps {
   title: string;
   content: string;
-}
-interface State {
-  
+  cancelCaption?: string;
+  okCaption?: string;
 }
 
-export default class Confirm extends React.Component<IProps, State> {
-  state = {}
+export default class Confirm extends React.Component<IProps> {
+
+  public static defaultProps = {
+    cancelCaption: "Cancel",
+    okCaption: "Okay"
+  };
 
   public render() {
     return (
@@ -23,8 +26,8 @@ export default class Confirm extends React.Component<IProps, State> {
           <p>{this.props.content}</p>
         </div>
         <div className="confirm-buttons-container">
-          <button className="confirm-cancel">Cancel</button>
-          <button className="confirm-okay">Okay</button>
+          <button className="confirm-cancel">{this.props.cancelCaption}</button>
+          <button className="confirm-okay">{this.props.okCaption}</button>
         </div>
         </div>
       </div>
