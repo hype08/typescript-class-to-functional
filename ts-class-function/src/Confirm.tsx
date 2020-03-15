@@ -1,25 +1,26 @@
-import React, { Component } from 'react'
+import * as React from 'react'
 import './Confirm.css'
 
-interface Props {
-  
+interface IProps {
+  title: string;
+  content: string;
 }
 interface State {
   
 }
 
-export default class Confirm extends Component<Props, State> {
+export default class Confirm extends React.Component<IProps, State> {
   state = {}
 
-  render() {
+  public render() {
     return (
       <div className="confirm-wrapper confirm-visible">
         <div className="confirm-container">
           <div className="confirm-title-container">
-            <span>This is where the title goes</span>
+            <span>{this.props.title}</span>
           </div>
         <div className="confirm-content-container">
-          <p>This is where the content goes</p>
+          <p>{this.props.content}</p>
         </div>
         <div className="confirm-buttons-container">
           <button className="confirm-cancel">Cancel</button>

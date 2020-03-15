@@ -21,7 +21,7 @@ class App extends React.Component {
             Learn React
           </a>
         </header>
-        <Confirm />
+        <Confirm title="React and TypeScript App" content="Content"/>
       </div>
     )
   }

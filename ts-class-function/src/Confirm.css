@@ -41,7 +41,7 @@
 
 .confirm-buttons-container {
   padding: 5px 15px 10px 15px;
-  text-align: right;
+  left: 50%;
 }
 
 .confirm-buttons-container button {
@@ -56,15 +56,23 @@
 
 .confirm-cancel {
   background-color: #fff;
-  background-color: #848e97;
+  border-color: #848e97;
 }
 
 .confirm-cancel:hover {
+  color: #fff;
   background-color: #6c757d;
+  border-color: #6c757d;
 }
 
 .confirm-ok {
-  background-color: #848e97;
-  background-color: #848e97;
-  color: #fff;
+  background-color: #fff;
+  border-color: #848e97;
 }
+
+.confirm-okay:hover {
+  color: #fff;
+  background-color: #6c757d;
+  border-color: #6c757d;
+}
+
