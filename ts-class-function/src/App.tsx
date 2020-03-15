@@ -3,7 +3,10 @@ import logo from './logo.svg';
 import './App.css';
 import Confirm from './Confirm';
 
-class App extends React.Component {
+interface IState {
+  confirmOpen: boolean;
+}
+class App extends React.Component<{}, IState> {
 
   private handleCancelConfirmClick = () => {
     console.log("Cancel clicked");
@@ -30,7 +33,7 @@ class App extends React.Component {
             Learn React
           </a>
         </header>
-        <Confirm title="title" content="content" onCancelClick={this.handleCancelConfirmClick} onOkClick={this.handleOkConfirmClick}/>
+        <Confirm open={true} title="title" content="content" onCancelClick={this.handleCancelConfirmClick} onOkClick={this.handleOkConfirmClick}/>
       </div>
     )
   }
