@@ -5,21 +5,24 @@ import Confirm from './Confirm';
 
 interface IState {
   confirmOpen: boolean;
+  confirmMessage: string;
 }
 class App extends React.Component<{}, IState> {
   constructor(props: {}) {
     super(props);
     this.state = {
-      confirmOpen: true,
+      confirmMessage: "Press Confirm",
+      confirmOpen: false,
     }
   }
 
   private handleCancelConfirmClick = () => {
-    this.setState({ confirmOpen: false });
+    this.setState({ confirmMessage: "Okay, see you later!", confirmOpen: false });
+  
   }
 
   private handleConfirmClick = () => {
-    this.setState({ confirmOpen: true });
+    this.setState({ confirmMessage: "Cool, thanks!", confirmOpen: true });
   }
 
   public render() {
@@ -39,6 +42,7 @@ class App extends React.Component<{}, IState> {
             Learn React
           </a>
         </header>
+        <p>{this.state.confirmMessage}</p>
         <button onClick={this.handleConfirmClick}>Confirm</button>
         <Confirm open={this.state.confirmOpen} title="title" content="content" onCancelClick={this.handleCancelConfirmClick} onOkClick={this.handleConfirmClick}/>
       </div>
