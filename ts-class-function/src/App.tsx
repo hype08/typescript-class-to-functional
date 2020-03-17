@@ -6,15 +6,37 @@ import Confirm from './Confirm';
 interface IState {
   confirmOpen: boolean;
   confirmMessage: string;
+  confirmVisible: boolean;
+  countDown: number
 }
 class App extends React.Component<{}, IState> {
+
+  private timer: number = 0;
+
+  public componentDidMount() {
+    this.timer = window.setInterval(() => this.handleTimerTick(), 1000)
+
+  }
   constructor(props: {}) {
     super(props);
     this.state = {
       confirmMessage: "Press Confirm",
       confirmOpen: false,
+      confirmVisible: true,
+      countDown: 10
     }
   }
+
+  private handleTimerTick() {
+    this.setState(
+      {
+        confirmMessage: `Please hit the confirm button ${
+          this.state.countDown
+        } secs to go`,
+        countDown: this.state.countDown -1
+      }
+    )
+  } 
 
   private handleCancelConfirmClick = () => {
     this.setState({ confirmMessage: "Okay, see you later!", confirmOpen: false });
