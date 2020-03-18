@@ -1,7 +1,7 @@
 import * as React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Confirm from './Confirm';
+import { Confirm } from './Confirm';
 
 interface IState {
   confirmOpen: boolean;
