@@ -13,10 +13,20 @@ class App extends React.Component<{}, IState> {
 
   private timer: number = 0;
 
+  // static getDerivedStateFromProps(props: {}, state: IState) {
+  // console.log("App -> getDerivedStateFromProps -> state", state)
+  // console.log("App -> getDerivedStateFromProps -> props", props)
+  // }
+
   public componentDidMount() {
     this.timer = window.setInterval(() => this.handleTimerTick(), 1000)
 
   }
+
+  public componentWillUnmount() {
+    clearInterval(this.timer);
+  }
+
   constructor(props: {}) {
     super(props);
     this.state = {
