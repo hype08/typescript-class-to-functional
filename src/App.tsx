@@ -1,91 +1,55 @@
-import * as React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import { Confirm } from './Confirm';
+import React, { Component } from "react";
+import logo from "./logo.svg";
+import "./App.css";
+import Confirm from "./Confirm";
 
 interface IState {
   confirmOpen: boolean;
   confirmMessage: string;
   confirmVisible: boolean;
-  countDown: number
+  countDown: number;
 }
-class App extends React.Component<{}, IState> {
-
+class App extends Component<{}, IState> {
+  public static getDerivedStateFromProps(props: {}, state: IState) {
+    console.log("getDerivedStateFromProps", props, state);
+    return null;
+  }
   private timer: number = 0;
   private renderCount = 0;
-
-  // public static getDerivedStateFromProps(props: {}, state: IState) {
-  // console.log("App -> getDerivedStateFromProps -> state", state)
-  // console.log("App -> getDerivedStateFromProps -> props", props)
-  // }
-
-  public shouldComponentUpdate(nextProps: {}, nextState: IState) {
-    console.log("shouldComponentUpdate", nextProps, nextState)
-    return true;
-  }
-
-  // called just before DOM is updated, passes to componentdidupdate
-  public getSnapshotBeforeUpdate(prevProps: {}, prevState: IState) {
-   this.renderCount += 1;
-   console.log("getSnapshotBeforeUpdate", prevProps, prevState, {
-     renderCount: this.renderCount
-   });   
-   return this.renderCount
-  }  
-
-  public componentDidUpdate( prevProps: {}, prevState: IState, snapshot: number) {
-   console.log("componentDidUpdate", prevProps, prevState, 
-   snapshot, {
-     renderCount: this.renderCount
-   }); 
-  }
-
-  public componentDidMount() {
-    this.timer = window.setInterval(() => this.handleTimerTick(), 1000)
-
-  }
-
-  public componentWillUnmount() {
-    clearInterval(this.timer);
-  }
-
   constructor(props: {}) {
     super(props);
     this.state = {
-      confirmMessage: "Press Confirm",
+      confirmMessage: "Please hit the confirm button",
       confirmOpen: false,
       confirmVisible: true,
       countDown: 10
-    }
+    };
   }
 
-  private handleTimerTick() {
-    this.setState(
-      {
-        confirmMessage: `Please hit the confirm button ${
-          this.state.countDown
-        } secs to go`,
-        countDown: this.state.countDown -1
-      },
-      () => {
-        if (this.state.countDown <= 0) {
-          clearInterval(this.timer);
-          this.setState({
-            confirmMessage: "Too late!",
-            confirmVisible: false
-          })
-        }
-      }
-    )
-  } 
-
-  private handleCancelConfirmClick = () => {
-    this.setState({ confirmMessage: "Okay, see you later!", confirmOpen: false });
-    clearInterval(this.timer);
+  public componentDidMount() {
+    this.timer = window.setInterval(() => this.handleTimerTick(), 1000);
+    console.log("component did update")
   }
 
-  private handleConfirmClick = () => {
-    this.setState({ confirmMessage: "Cool, thanks!", confirmOpen: true });
+  public getSnapshotBeforeUpdate(prevProps: {}, prevState: IState) {
+    this.renderCount += 1;
+    console.log("getSnapshotBeforeUpdate", prevProps, prevState, {
+      renderCount: this.renderCount
+    });
+    return this.renderCount;
+  }
+
+  public componentDidUpdate(
+    prevProps: {},
+    prevState: IState,
+    snapshot: number
+  ) {
+    console.log("componentDidUpdate", prevProps, prevState, snapshot, {
+      renderCount: this.renderCount
+    });
+  }
+
+  public componentWillUnmount() {
     clearInterval(this.timer);
   }
 
@@ -108,11 +72,63 @@ class App extends React.Component<{}, IState> {
         </header>
         <p>{this.state.confirmMessage}</p>
         {this.state.confirmVisible && (
-          <button onClick={this.handleCancelConfirmClick}>Confirm</button>
+          <button onClick={this.handleConfirmClick}>Confirm</button>
         )}
-        <Confirm open={this.state.confirmOpen} title="title" content="content" onCancelClick={this.handleCancelConfirmClick} onOkClick={this.handleConfirmClick}/>
+        {this.state.countDown > 0 && (
+          <Confirm
+            open={this.state.confirmOpen}
+            title="React and TypeScript"
+            content="Are you sure you want to learn React and TypeScript?"
+            cancelCaption="No way"
+            okCaption="Yes please!"
+            onCancelClick={this.handleCancelConfirmClick}
+            onOkClick={this.handleOkConfirmClick}
+          />
+        )}
       </div>
-    )
+    );
+  }
+
+  private handleConfirmClick = () => {
+    this.setState({ confirmOpen: true });
+    clearInterval(this.timer);
+  };
+
+  private handleCancelConfirmClick = () => {
+    this.setState({
+      confirmMessage: "Take a break, I'm sure you will later ...",
+      confirmOpen: false
+    });
+    clearInterval(this.timer);
+  };
+
+  private handleOkConfirmClick = () => {
+    this.setState({
+      confirmMessage: "Cool, carry on reading!",
+      confirmOpen: false
+    });
+    clearInterval(this.timer);
+  };
+
+  private handleTimerTick() {
+    this.setState(
+      {
+        confirmMessage: `Please hit the confirm button ${
+          this.state.countDown
+          } secs to go`,
+        countDown: this.state.countDown - 1
+      },
+      () => {
+        if (this.state.countDown <= 0) {
+          clearInterval(this.timer);
+          this.setState({
+            confirmMessage: "Too late to confirm!",
+            confirmVisible: false
+          });
+        }
+      }
+    );
   }
 }
+
 export default App;
