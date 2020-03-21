@@ -14,6 +14,16 @@ class App extends React.Component<{}, IState> {
   private timer: number = 0;
   private renderCount = 0;
 
+  // public static getDerivedStateFromProps(props: {}, state: IState) {
+  // console.log("App -> getDerivedStateFromProps -> state", state)
+  // console.log("App -> getDerivedStateFromProps -> props", props)
+  // }
+
+  public shouldComponentUpdate(nextProps: {}, nextState: IState) {
+    console.log("shouldComponentUpdate", nextProps, nextState)
+    return true;
+  }
+
   // called just before DOM is updated, passes to componentdidupdate
   public getSnapshotBeforeUpdate(prevProps: {}, prevState: IState) {
    this.renderCount += 1;
@@ -29,10 +39,6 @@ class App extends React.Component<{}, IState> {
      renderCount: this.renderCount
    }); 
   }
-  // public static getDerivedStateFromProps(props: {}, state: IState) {
-  // console.log("App -> getDerivedStateFromProps -> state", state)
-  // console.log("App -> getDerivedStateFromProps -> props", props)
-  // }
 
   public componentDidMount() {
     this.timer = window.setInterval(() => this.handleTimerTick(), 1000)
