@@ -12,8 +12,24 @@ interface IState {
 class App extends React.Component<{}, IState> {
 
   private timer: number = 0;
+  private renderCount = 0;
 
-  // static getDerivedStateFromProps(props: {}, state: IState) {
+  // called just before DOM is updated, passes to componentdidupdate
+  public getSnapshotBeforeUpdate(prevProps: {}, prevState: IState) {
+   this.renderCount += 1;
+   console.log("getSnapshotBeforeUpdate", prevProps, prevState, {
+     renderCount: this.renderCount
+   });   
+   return this.renderCount
+  }  
+
+  public componentDidUpdate( prevProps: {}, prevState: IState, snapshot: number) {
+   console.log("componentDidUpdate", prevProps, prevState, 
+   snapshot, {
+     renderCount: this.renderCount
+   }); 
+  }
+  // public static getDerivedStateFromProps(props: {}, state: IState) {
   // console.log("App -> getDerivedStateFromProps -> state", state)
   // console.log("App -> getDerivedStateFromProps -> props", props)
   // }
