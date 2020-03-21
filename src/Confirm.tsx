@@ -11,14 +11,20 @@ interface IProps {
   onCancelClick: () => void;
 }
 
-
 export const Confirm: React.SFC<IProps> = (props) => {
+
+  const [cancelClickCount, setCancelClickCount] = React.useState(0);
+  
   const handleOkClick = () => {
     props.onOkClick();
   }
 
   const handleCancelClick = () => {
-    props.onCancelClick();
+    const newCount = cancelClickCount + 1;
+    setCancelClickCount(newCount);
+    if (newCount >= 2) {
+      props.onCancelClick();
+    }
   }
 
   return (
@@ -31,7 +37,7 @@ export const Confirm: React.SFC<IProps> = (props) => {
         <p>{props.content}</p>
       </div>
       <div className="confirm-buttons-container">
-        <button className="confirm-cancel" onClick={handleCancelClick}>{props.cancelCaption}</button>
+        <button className="confirm-cancel" onClick={handleCancelClick}>{cancelClickCount === 0 ? props.cancelCaption : "Really?"}</button>
         <button className="confirm-okay" onClick={handleOkClick}>{props.okCaption}</button>
       </div>
       </div>
