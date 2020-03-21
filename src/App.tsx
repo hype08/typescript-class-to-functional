@@ -75,7 +75,9 @@ class App extends React.Component<{}, IState> {
           </a>
         </header>
         <p>{this.state.confirmMessage}</p>
-        <button onClick={this.handleConfirmClick}>Confirm</button>
+        {this.state.confirmVisible && (
+          <button onClick={this.handleCancelConfirmClick}>Confirm</button>
+        )}
         <Confirm open={this.state.confirmOpen} title="title" content="content" onCancelClick={this.handleCancelConfirmClick} onOkClick={this.handleConfirmClick}/>
       </div>
     )
