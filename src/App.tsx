@@ -34,17 +34,27 @@ class App extends React.Component<{}, IState> {
           this.state.countDown
         } secs to go`,
         countDown: this.state.countDown -1
+      },
+      () => {
+        if (this.state.countDown <= 0) {
+          clearInterval(this.timer);
+          this.setState({
+            confirmMessage: "Too late!",
+            confirmVisible: false
+          })
+        }
       }
     )
   } 
 
   private handleCancelConfirmClick = () => {
     this.setState({ confirmMessage: "Okay, see you later!", confirmOpen: false });
-  
+    clearInterval(this.timer);
   }
 
   private handleConfirmClick = () => {
     this.setState({ confirmMessage: "Cool, thanks!", confirmOpen: true });
+    clearInterval(this.timer);
   }
 
   public render() {
